@@ -14,7 +14,7 @@ export default {
             state.favoriteList.push(favorite);
         },
         removeFavorite(state, favorite) {
-            // state.favoriteList.push(favorite);
+            state.favoriteList.splice(state.favoriteList.indexOf(favorite), 1);
         },
     },
 }

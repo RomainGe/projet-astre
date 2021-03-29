@@ -6,6 +6,9 @@ export default {
     }),
     mutations: {
         setStarList(state, starList) {
+            for (let i = 0; i < starList.length; i++) {
+                starList[i].isFavorite = false;
+            }
             state.starList = starList
         },
     },
