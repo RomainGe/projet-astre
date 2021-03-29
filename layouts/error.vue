@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container text-white">
         <div>Erreur {{ error.statusCode }}</div>
         <div>{{ error.message }}</div>
         <NuxtLink to="/">Back to home page</NuxtLink>
