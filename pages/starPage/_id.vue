@@ -1,6 +1,7 @@
 <template>
-    <div class="back-planet h-screen text-white content-center">
-      <NuxtLink class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-10 mx-10" to="/" >Go back</NuxtLink >
+    <div class="back-planet h-full text-white content-center">
+      <NuxtLink class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-10 mx-10" to="/" >HomePage</NuxtLink >
+      <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-10 mx-10" @click="$router.back()">Go Back</a>
       <div class="p-3">
           <div class="flex items-start justify-between grid grid-cols-2 gap-6">
               <div class="grid grid-cols-2 gap-4">
@@ -103,12 +104,15 @@
                 <p class="text-xs text-white">VolExponent</p>
               </div>
             </div>
-
-              <div v-if="star.moons" class="col-span-2 grid grid-cols-2 gap-4">
-              
-                Moons : {{star.moons.length}}
-              </div>
           </div>
+      </div>
+      <div v-if="star.moons" class="col-span-2 grid grid-cols-2 md:grid-cols-4 gap-4">
+        Moons : {{star.moons.length}}
+        <div v-for="(moon, index) in star.moons" :key="index" class="font-sans flex items-center justify-center bg-blue-darker w-full py-8">
+          <div class="overflow-hidden bg-white rounded max-w-xs w-full shadow-lg  leading-normal">
+              <NuxtLink class="hover:bg-blue border-b hover:text-blue text-black font-bold py-2 px-4 rounded my-10 mx-10" :to="`/starPage/${moon.moon}`" >{{moon.moon}}</NuxtLink >
+          </div>
+        </div>
       </div>
     </div>
 </template>

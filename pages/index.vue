@@ -18,7 +18,6 @@
 import Vue from 'vue'
 import { mapState, mapActions } from 'vuex';
 
-
 export default Vue.extend({
     data() {
         return {
@@ -33,10 +32,8 @@ export default Vue.extend({
     methods: {
       filterList(filter: string){
         if(filter == 'planet'){
-          // Create a model for a star avoid this warning
           this.starList = this.$store.state.star.starList.filter((star: { isPlanet: boolean; }) => star.isPlanet == true );
         }else if(filter == 'all'){
-          // Create a model for a star avoid this warning
           this.starList = this.$store.state.star.starList;
         }else if(filter == 'moons'){
           this.starList = this.$store.state.star.starList.filter((star: { moons: []; }) => star.moons != null );
@@ -49,8 +46,6 @@ export default Vue.extend({
         await this.$store.dispatch('star/getAllStars');
         this.starList = this.$store.state.star.starList;
     }
-
-
 })
 </script>
 

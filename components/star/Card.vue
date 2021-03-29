@@ -2,10 +2,10 @@
     <div class="w-full max-w-sm overflow-hidden rounded border bg-white shadow">
       <div class="p-3">
         <div class="grid grid-cols-2 gap-4">
-          <svg @click="addFavorite()" v-if="!star.isFavorite" class="h-10 w-10 col-span-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg @click="addFavorite()" v-if="!favoriteList.includes(star)" class="h-10 w-10 col-span-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
           </svg>
-          <svg @click="removeFavorite()" v-else class="h-10 w-10 col-span-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="red">
+          <svg @click="removeFavorite()" v-else-if="favoriteList.includes(star)" class="h-10 w-10 col-span-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="red">
             <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
           </svg>
           <svg class="h-20 w-20 col-span-1" v-if="!selectIcon()" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="grey">
@@ -51,13 +51,14 @@ export default Vue.extend({
     data() {
         return {
           expand: false,
-          isFavorite: false,
+          favoriteList: [],
         }
     },
     methods:{
       addFavorite(){
         try{
           this.$store.commit('favorite/addFavorite', this.star);
+          this.favoriteList = this.$store.state.favorite.favoriteList;
           this.$toasted.success('Successfully Added', {}).goAway(1500);
         }catch{
           this.$toasted.error('Failed :/ , try again please !').goAway(1500);
@@ -81,17 +82,12 @@ export default Vue.extend({
     },
     computed: {
     },
+    created(){
+      this.favoriteList = this.$store.state.favorite.favoriteList;
+    },
     watch: {
       '$store.state.favorite.favoriteList': function() {
-        let favList: any[] = this.$store.state.favorite.favoriteList;
-        if(favList.length > 0){
-          let checkFav = favList.find((fav: any) => fav.id == this.star.id);
-          if(checkFav){
-            this.star.isFavorite = true;
-          }else{
-            this.star.isFavorite = false;
-          }
-        }
+        this.favoriteList = this.$store.state.favorite.favoriteList;
       }
     }
 
